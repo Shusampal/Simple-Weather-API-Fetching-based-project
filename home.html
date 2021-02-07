@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+        integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+        crossorigin="anonymous" />
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        div.box {
+            display: flex;
+            background: #7c9ac2;
+            flex-direction: column;
+            width: 350px;
+            height: 400px;
+            margin: 100px auto;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+        }
+
+        .fa-street-view {
+            animation-name: an1;
+            animation-iteration-count: infinite;
+            animation-duration: 2s;
+            animation-direction: alternate;
+            animation-timing-function: linear;
+        }
+
+        @keyframes an1 {
+            from {
+                transform: translateX(-0.5rem);
+            }
+
+            to {
+                transform: translateX(0.5rem);
+            }
+        }
+
+
+
+        #weathercon {
+            font-size: 4em;
+            padding-bottom: 20px;
+        }
+
+
+        h2.location {
+            font-size: 40px;
+            margin: 0px;
+            margin-bottom: 5px;
+
+        }
+
+        h5{
+            margin: 0px;
+        }
+    </style>
+    <title>Weather API call</title>
+</head>
+
+<body>
+    <div class='box'>
+        <div id="weathercon">
+            <h5>{%tempHH%}</h5>
+        </div>
+
+        <h3 id="temp">"{%tempH%}"</h3>
+
+        <div class="info">
+            <h2 class="location"><i class="fas fa-street-view" style="color : black"></i> &nbsp;{%city%} , {%country%}</h2>
+            <p id="date">WED | OCT 23 | 10:49 AM</p>
+            <hi class="temp">{%temp%}&deg;C</hi>
+            <h3 class="tempmin_max">Min {%temp_min%}&deg;C | Max {%temp_max%}&deg;C</h3>
+        </div>
+    </div>
+
+    <script>
+        const currDate = document.getElementById("date");
+
+        const weatherCon = document.getElementById("weathercon");
+
+        const tempStatus = "{%temp_status%}";
+
+        if(tempStatus == "Sunny")
+        {
+            weatherCon.innerHTML = '<em class="fas fa-sun" style="color : #eccc68"></em>';
+        }
+        else if(tempStatus == "Clouds")
+        {
+            weatherCon.innerHTML = '<i class="fas fa-cloud" style = "color : grey"></i>';
+        }
+        else if(tempStatus == "Raint")
+        {
+            weatherCon.innerHTML = '<i class="fas fa-cloud-rain" style = "color : black"></i>';
+        }
+        else if(tempStatus == "Snow")
+        {
+            weatherCon.innerHTML = '<i class="fas fa-snowflake" style = "color : white"></i>';
+        }
+        else if(tempStatus == "Clear")
+        {
+            weatherCon.innerHTML = '<i class="fas fa-cloud-sun" style = "color : #CCF2FF"></i>';
+        }       
+
+        const setDate = () => {
+            var dt = new Date();
+            const dayArray = ["sun", "mon", "tues", "wed", "thurs", "fri", "sat"];
+            const day = dayArray[dt.getDay()];
+
+            const monArray = ["jan", "feb", "mar", "apr", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"];
+
+            const month = monArray[dt.getMonth()];
+
+            const date = dt.getDate();
+
+            // console.log(day + " " + month + " "+ date);
+
+            return `${day} ${month} ${date}`;
+        }
+
+
+
+        const setTime = () => {
+            var dt1 = new Date();
+            const tm = dt1.toLocaleTimeString();
+            // console.log(tm);
+
+            return tm;
+        }
+
+
+        const text = setDate() + " | " + setTime();
+
+        currDate.innerHTML = `<h2>${text}</h2>`;
+
+    </script>
+
+</body>
+
+</html>
